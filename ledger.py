@@ -62,4 +62,36 @@ def interactive_debit():
     add_entry("debit", category, amount, desc)
     print(f"Debit of ${amount:.2f} for {category} added.")
     
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: ledger.py [add|debit|balance|show]")
+        sys.exit(1)
+        
+    cmd = sys.argv[1]
+    
+    if cmd in ("add", "-add"):
+        amount = float(sys.argv[2])
+        desc = " ".join(sys.argv[3:]) if len(sys.argv) > 3 else "" 
+        add_entry("deposit", "", amount, desc)
+        
+    elif cmd in ("debit", "-debit"):
+        if len(sys.argv) == 2:
+            interactive_debit()
+        else:
+            category = sys.argv[2]
+            amount = float(sys.argv[3])
+            desc = " ".join(sys.argv[4:]) if len(sys.argv) > 4 else ""
+            add_entry("debit", category, amount, desc)
+            
+    elif cmd in ("blance", "-balance"):
+        show_balance()
+        
+    elif cmd in ("show", "-show"):
+        show_month()
+        
+    else:
+        print("Unknow command...")
+    
+        
+    
 
